@@ -7,15 +7,12 @@ import (
 )
 
 type RestoreInst2ExistReq struct {
+	Source *RestoreInstSource `json:"source"`
 
-	// 数据恢复源。
-	Source *interface{} `json:"source,omitempty"`
-
-	// 数据恢复目标。
-	Target *interface{} `json:"target,omitempty"`
+	Target *RestoreInstTarget `json:"target"`
 
 	// 关联dn。
-	DataNodeRelations *[]DataNodeRelation `json:"data_node_relations,omitempty"`
+	DataNodeRelations []DataNodeRelation `json:"data_node_relations"`
 }
 
 func (o RestoreInst2ExistReq) String() string {

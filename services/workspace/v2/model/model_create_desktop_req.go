@@ -59,6 +59,9 @@ type CreateDesktopReq struct {
 	// 企业项目ID，默认\"0。\"
 	EnterpriseProjectId *string `json:"enterprise_project_id,omitempty"`
 
+	// OU名称，在对接AD时使用，需提前在AD中创建OU。
+	OuName *string `json:"ou_name,omitempty"`
+
 	// 标签列表。
 	Tags *[]Tag `json:"tags,omitempty"`
 
@@ -77,6 +80,9 @@ type CreateDesktopReq struct {
 
 	// 是否在发放新桌面时，挂载旧桌面磁盘为数据盘
 	IfMountOldDesktopDisk *bool `json:"if_mount_old_desktop_disk,omitempty"`
+
+	// 桌面分配的域。
+	Domain *string `json:"domain,omitempty"`
 }
 
 func (o CreateDesktopReq) String() string {

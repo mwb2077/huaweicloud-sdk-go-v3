@@ -25,9 +25,6 @@ type TaskResp struct {
 	// 是否记录失败对象。开启后，如果有迁移失败对象，会在目的端存储失败对象信息。
 	EnableFailedObjectRecording *bool `json:"enable_failed_object_recording,omitempty"`
 
-	// 存储入OBS时是否使用KMS加密。
-	EnableKms *bool `json:"enable_kms,omitempty"`
-
 	// 是否启用元数据迁移，默认否。不启用时，为保证迁移任务正常运行，仍将为您迁移ContentType元数据。
 	EnableMetadataMigration *bool `json:"enable_metadata_migration,omitempty"`
 
@@ -118,6 +115,9 @@ type TaskResp struct {
 
 	// 是否开启请求者付款，在启用后，请求者支付请求和数据传输费用。
 	EnableRequesterPays *bool `json:"enable_requester_pays,omitempty"`
+
+	// OBS系统类型 BUCKET：一般桶 PFS：并行文件系统
+	ObsSystem *TaskRespObsSystem `json:"obs_system,omitempty"`
 
 	// HIGH：高优先级 MEDIUM：中优先级 LOW：低优先级
 	TaskPriority *TaskRespTaskPriority `json:"task_priority,omitempty"`
@@ -385,6 +385,53 @@ func (c TaskRespConsistencyCheck) MarshalJSON() ([]byte, error) {
 }
 
 func (c *TaskRespConsistencyCheck) UnmarshalJSON(b []byte) error {
+	myConverter := converter.StringConverterFactory("string")
+	if myConverter == nil {
+		return errors.New("unsupported StringConverter type: string")
+	}
+
+	interf, err := myConverter.CovertStringToInterface(strings.Trim(string(b[:]), "\""))
+	if err != nil {
+		return err
+	}
+
+	if val, ok := interf.(string); ok {
+		c.value = val
+		return nil
+	} else {
+		return errors.New("convert enum data to string error")
+	}
+}
+
+type TaskRespObsSystem struct {
+	value string
+}
+
+type TaskRespObsSystemEnum struct {
+	BUCKET TaskRespObsSystem
+	PFS    TaskRespObsSystem
+}
+
+func GetTaskRespObsSystemEnum() TaskRespObsSystemEnum {
+	return TaskRespObsSystemEnum{
+		BUCKET: TaskRespObsSystem{
+			value: "BUCKET",
+		},
+		PFS: TaskRespObsSystem{
+			value: "PFS",
+		},
+	}
+}
+
+func (c TaskRespObsSystem) Value() string {
+	return c.value
+}
+
+func (c TaskRespObsSystem) MarshalJSON() ([]byte, error) {
+	return utils.Marshal(c.value)
+}
+
+func (c *TaskRespObsSystem) UnmarshalJSON(b []byte) error {
 	myConverter := converter.StringConverterFactory("string")
 	if myConverter == nil {
 		return errors.New("unsupported StringConverter type: string")

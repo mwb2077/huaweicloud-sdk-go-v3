@@ -623,7 +623,7 @@ func (c *DwsClient) CreateEventSubInvoker(request *model.CreateEventSubRequest) 
 
 // CreateLogicalCluster 创建逻辑集群
 //
-// 创建逻辑集群。
+// 使用弹性池的节点，创建逻辑集群，此接口已经不再演进，后续版本中可能会下线，新版本中此接口对应功能已经下线。
 //
 // Please refer to HUAWEI cloud API Explorer for details.
 func (c *DwsClient) CreateLogicalCluster(request *model.CreateLogicalClusterRequest) (*model.CreateLogicalClusterResponse, error) {
@@ -749,8 +749,8 @@ func (c *DwsClient) DeleteAlarmSubInvoker(request *model.DeleteAlarmSubRequest) 
 
 // DeleteCluster 删除集群
 //
-// 删除集群v2接口。集群删除后将释放此集群的所有资源，包括客户数据。为了安全起见，请在删除集群前为这个集群创建快照。
-// 删除集群建议优先使用“删除DWS集群”接口，覆盖此接口所有参数及功能。
+// 删除集群（旧接口）。集群删除后将释放此集群的所有资源，包括客户数据。为了安全起见，请在删除集群前为这个集群创建快照。
+// 删除集群建议优先使用另一个新接口，覆盖此接口所有参数及功能。
 //
 // Please refer to HUAWEI cloud API Explorer for details.
 func (c *DwsClient) DeleteCluster(request *model.DeleteClusterRequest) (*model.DeleteClusterResponse, error) {
@@ -3630,7 +3630,7 @@ func (c *DwsClient) ShrinkClusterInvoker(request *model.ShrinkClusterRequest) *S
 
 // ShrinkLogicalCluster 逻辑集群缩容
 //
-// 逻辑集群缩容，支持从弹性池缩容。
+// 逻辑集群缩容，支持从逻辑集群中缩容、从弹性池中缩容。
 //
 // Please refer to HUAWEI cloud API Explorer for details.
 func (c *DwsClient) ShrinkLogicalCluster(request *model.ShrinkLogicalClusterRequest) (*model.ShrinkLogicalClusterResponse, error) {
@@ -4074,6 +4074,7 @@ func (c *DwsClient) UpdateEventSubInvoker(request *model.UpdateEventSubRequest) 
 // 编辑修改逻辑集群。接口根据提交的请求体判断当前操作是逻辑集群缩容或者扩容。
 // 场景一：原始的逻辑集群有6个节点（两个环），提交请求时的请求体只有1个环，此时为逻辑集群缩容。
 // 场景二：原始的逻辑集群有6个节点（两个环），提交请求时的请求体中有3个环，此时为逻辑集群扩容。
+// 此接口已经不再演进，后续版本中可能会下线，新版本中此接口对应功能已经下线。
 //
 // Please refer to HUAWEI cloud API Explorer for details.
 func (c *DwsClient) UpdateLogicalCluster(request *model.UpdateLogicalClusterRequest) (*model.UpdateLogicalClusterResponse, error) {
@@ -4132,6 +4133,27 @@ func (c *DwsClient) UpdateMaintenanceWindow(request *model.UpdateMaintenanceWind
 func (c *DwsClient) UpdateMaintenanceWindowInvoker(request *model.UpdateMaintenanceWindowRequest) *UpdateMaintenanceWindowInvoker {
 	requestDef := GenReqDefForUpdateMaintenanceWindow()
 	return &UpdateMaintenanceWindowInvoker{invoker.NewBaseInvoker(c.HcClient, request, requestDef)}
+}
+
+// UpdateQueueBaseInfo 更新资源池基础信息
+//
+// 更新资源池基础信息。
+//
+// Please refer to HUAWEI cloud API Explorer for details.
+func (c *DwsClient) UpdateQueueBaseInfo(request *model.UpdateQueueBaseInfoRequest) (*model.UpdateQueueBaseInfoResponse, error) {
+	requestDef := GenReqDefForUpdateQueueBaseInfo()
+
+	if resp, err := c.HcClient.Sync(request, requestDef); err != nil {
+		return nil, err
+	} else {
+		return resp.(*model.UpdateQueueBaseInfoResponse), nil
+	}
+}
+
+// UpdateQueueBaseInfoInvoker 更新资源池基础信息
+func (c *DwsClient) UpdateQueueBaseInfoInvoker(request *model.UpdateQueueBaseInfoRequest) *UpdateQueueBaseInfoInvoker {
+	requestDef := GenReqDefForUpdateQueueBaseInfo()
+	return &UpdateQueueBaseInfoInvoker{invoker.NewBaseInvoker(c.HcClient, request, requestDef)}
 }
 
 // UpdateQueueResources 更新资源池资源配置信息

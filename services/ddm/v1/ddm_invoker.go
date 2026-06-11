@@ -997,6 +997,22 @@ func (i *RebuildConfigInvoker) Invoke() (*model.RebuildConfigResponse, error) {
 	}
 }
 
+type RebuildDdmConfigInvoker struct {
+	*invoker.BaseInvoker
+}
+
+func (i *RebuildDdmConfigInvoker) GetBaseInvoker() *invoker.BaseInvoker {
+	return i.BaseInvoker
+}
+
+func (i *RebuildDdmConfigInvoker) Invoke() (*model.RebuildDdmConfigResponse, error) {
+	if result, err := i.BaseInvoker.Invoke(); err != nil {
+		return nil, err
+	} else {
+		return result.(*model.RebuildDdmConfigResponse), nil
+	}
+}
+
 type ResetAdministratorInvoker struct {
 	*invoker.BaseInvoker
 }
@@ -1557,6 +1573,22 @@ func (i *UnbindEipInvoker) Invoke() (*model.UnbindEipResponse, error) {
 	}
 }
 
+type UnbindLogicDbInvoker struct {
+	*invoker.BaseInvoker
+}
+
+func (i *UnbindLogicDbInvoker) GetBaseInvoker() *invoker.BaseInvoker {
+	return i.BaseInvoker
+}
+
+func (i *UnbindLogicDbInvoker) Invoke() (*model.UnbindLogicDbResponse, error) {
+	if result, err := i.BaseInvoker.Invoke(); err != nil {
+		return nil, err
+	} else {
+		return result.(*model.UnbindLogicDbResponse), nil
+	}
+}
+
 type UpdateDatabaseInfoInvoker struct {
 	*invoker.BaseInvoker
 }
@@ -1570,6 +1602,38 @@ func (i *UpdateDatabaseInfoInvoker) Invoke() (*model.UpdateDatabaseInfoResponse,
 		return nil, err
 	} else {
 		return result.(*model.UpdateDatabaseInfoResponse), nil
+	}
+}
+
+type UpdateDdmInstanceNameInvoker struct {
+	*invoker.BaseInvoker
+}
+
+func (i *UpdateDdmInstanceNameInvoker) GetBaseInvoker() *invoker.BaseInvoker {
+	return i.BaseInvoker
+}
+
+func (i *UpdateDdmInstanceNameInvoker) Invoke() (*model.UpdateDdmInstanceNameResponse, error) {
+	if result, err := i.BaseInvoker.Invoke(); err != nil {
+		return nil, err
+	} else {
+		return result.(*model.UpdateDdmInstanceNameResponse), nil
+	}
+}
+
+type UpdateDdmInstanceSecurityGroupInvoker struct {
+	*invoker.BaseInvoker
+}
+
+func (i *UpdateDdmInstanceSecurityGroupInvoker) GetBaseInvoker() *invoker.BaseInvoker {
+	return i.BaseInvoker
+}
+
+func (i *UpdateDdmInstanceSecurityGroupInvoker) Invoke() (*model.UpdateDdmInstanceSecurityGroupResponse, error) {
+	if result, err := i.BaseInvoker.Invoke(); err != nil {
+		return nil, err
+	} else {
+		return result.(*model.UpdateDdmInstanceSecurityGroupResponse), nil
 	}
 }
 
